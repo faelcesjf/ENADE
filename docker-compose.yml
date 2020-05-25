@@ -1,0 +1,55 @@
+version: '3'
+
+services:
+
+## Tomcat
+  tomcat:
+    container_name: tomcat
+    image: tomcat:latest
+    restart: always
+    ports:
+      - 8080:8080
+    volumes:
+      - ./tomcat/webapps:/usr/local/tomcat/webapps
+      - ./tomcat/logs:/usr/local/tomcat/logs
+       
+## PostgreSQL
+  postgresql:
+    container_name: postgres
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      #- POSTGRES_DB=postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgresql/data:/data
+
+## MySQL
+  mysqldb:
+    container_name: mysql
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+
+#MongoDB
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    ports:
+      - 27017:27017
+    volumes:
+      - ./mongodb:/data/db
+      
+      
